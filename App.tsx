@@ -3,6 +3,9 @@ import { Activity, Smartphone, Shield, Zap, CheckCircle, Plus, Minus, ShoppingCa
 import { Button } from './components/Button';
 import { FeatureCard } from './components/FeatureCard';
 import { NutritionAnalyst } from './components/NutritionAnalyst';
+import { PrivacyPolicy } from './components/PrivacyPolicy';
+import { DeliveryPayment } from './components/DeliveryPayment';
+import { Contacts } from './components/Contacts';
 
 // --- Assets ---
 // Using placeholder images that represent the vibe (medical/tech/clean)
@@ -24,10 +27,27 @@ const GALLERY_IMAGES = [
   "https://www.freestylelibre.de/content/dam/adc/freestylelibrede/products/fsl3/FSL3-10.jpg" // Lifestyle 6
 ];
 
+type ViewState = 'home' | 'privacy' | 'delivery' | 'contacts';
+
 export default function App() {
+  const [view, setView] = useState<ViewState>('home');
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
 
+  // View Routing
+  if (view === 'privacy') {
+    return <PrivacyPolicy onBack={() => setView('home')} logoUrl={LOGO_URL} />;
+  }
+
+  if (view === 'delivery') {
+    return <DeliveryPayment onBack={() => setView('home')} logoUrl={LOGO_URL} />;
+  }
+
+  if (view === 'contacts') {
+    return <Contacts onBack={() => setView('home')} logoUrl={LOGO_URL} />;
+  }
+
+  // --- Home View Logic ---
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
   };
@@ -99,7 +119,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Logo Section */}
-            <div className="flex items-center gap-3 group cursor-pointer">
+            <div className="flex items-center gap-3 group cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
                <img src={LOGO_URL} alt="Freestyle Libre Logo" className="h-12 w-auto transition-transform duration-300 group-hover:scale-105" />
             </div>
 
@@ -505,7 +525,7 @@ export default function App() {
                 ))}
               </div>
               <div className="mt-8 text-sm text-gray-500">
-                <p>Не нашли ответ на свой вопрос? <a href="#" className="text-libre-yellow hover:underline font-bold">Напишите нам</a></p>
+                <p>Не нашли ответ на свой вопрос? <button onClick={() => setView('contacts')} className="text-libre-yellow hover:underline font-bold bg-transparent border-none p-0 cursor-pointer">Напишите нам</button></p>
               </div>
             </div>
 
@@ -562,14 +582,13 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             {/* Footer Logo - Clean, no wrapper */}
-            <div className="flex items-center gap-3 mb-6 md:mb-0 group cursor-pointer">
+            <div className="flex items-center gap-3 mb-6 md:mb-0 group cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
                <img src={LOGO_URL} alt="Freestyle Libre" className="h-10 w-auto" />
             </div>
             <div className="flex flex-wrap gap-8 text-gray-400 text-sm justify-center">
-              <a href="#" className="hover:text-libre-yellow transition-colors">Политика конфиденциальности</a>
-              <a href="#" className="hover:text-libre-yellow transition-colors">Условия использования</a>
-              <a href="#" className="hover:text-libre-yellow transition-colors">Доставка и оплата</a>
-              <a href="#" className="hover:text-libre-yellow transition-colors">Контакты</a>
+              <button onClick={() => setView('privacy')} className="hover:text-libre-yellow transition-colors bg-transparent border-none p-0 cursor-pointer text-gray-400">Политика конфиденциальности</button>
+              <button onClick={() => setView('delivery')} className="hover:text-libre-yellow transition-colors bg-transparent border-none p-0 cursor-pointer text-gray-400">Доставка и оплата</button>
+              <button onClick={() => setView('contacts')} className="hover:text-libre-yellow transition-colors bg-transparent border-none p-0 cursor-pointer text-gray-400">Контакты</button>
             </div>
             <div className="mt-6 md:mt-0 text-gray-500 text-sm">
               © 2024 Freestyle Libre Store. All rights reserved.
