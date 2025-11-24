@@ -138,7 +138,7 @@ export default function App() {
           <div className="flex justify-between items-center h-20">
             {/* Logo Section */}
             <div className="flex items-center gap-3 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-               <img src={LOGO_URL} alt="Freestyle Libre Logo" className="h-12 w-auto transition-transform duration-300 group-hover:scale-105" />
+               <img src={LOGO_URL} alt="Freestyle Libre - Главная" className="h-12 w-auto transition-transform duration-300 group-hover:scale-105" />
             </div>
 
             {/* Desktop Menu - Hidden on Tablet (lg) and smaller */}
@@ -266,14 +266,14 @@ export default function App() {
                 Новое поколение CGM
               </div>
               <h1 className="text-5xl lg:text-7xl font-black leading-tight text-gray-900">
-                Свобода <br/>
+                Freestyle Libre 3<br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-libre-yellow to-yellow-600">
-                  под контролем.
+                  Свобода под контролем.
                 </span>
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
-                Самый маленький, тонкий и точный сенсор глюкозы в мире. 
-                Freestyle Libre 3 меняет правила игры, автоматически передавая данные на ваш телефон.
+                Купить самый маленький, тонкий и точный сенсор глюкозы в мире с доставкой по России. 
+                Freestyle Libre 3 автоматически передает данные на ваш телефон каждую минуту.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a href="https://t.me/diabetik_biz" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
@@ -301,9 +301,10 @@ export default function App() {
                {/* Using object-contain to respect the 706x908 portrait ratio without cropping */}
                <img 
                  src={HERO_IMAGE} 
-                 alt="Freestyle Libre 3 Lifestyle" 
+                 alt="Сенсор Freestyle Libre 3 в работе" 
                  className="relative z-10 rounded-3xl drop-shadow-2xl transform -rotate-2 group-hover:rotate-0 transition-transform duration-700 w-full max-w-[360px] lg:max-w-[480px] h-auto object-contain"
                  style={{ maxHeight: '100%' }}
+                 fetchPriority="high"
                />
                
                {/* Floating Badge - Centered vertically */}
@@ -332,7 +333,7 @@ export default function App() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-4xl font-bold mb-4">Почему Libre 3?</h2>
+            <h2 className="text-4xl font-bold mb-4">Почему выбирают Libre 3?</h2>
             <p className="text-xl text-gray-600">
               Технологии будущего, доступные уже сегодня. Забудьте о прокалывании пальцев.
             </p>
@@ -359,7 +360,7 @@ export default function App() {
                 <button 
                   onClick={handlePrevImage}
                   className="absolute left-4 z-20 p-3 rounded-full bg-white/70 shadow-lg hover:bg-white text-gray-800 transition-all opacity-0 group-hover:opacity-100 hover:scale-110 focus:outline-none"
-                  aria-label="Previous image"
+                  aria-label="Предыдущее изображение"
                 >
                   <ChevronLeft className="w-6 h-6" />
                 </button>
@@ -368,16 +369,17 @@ export default function App() {
                 <button 
                   onClick={handleNextImage}
                   className="absolute right-4 z-20 p-3 rounded-full bg-white/70 shadow-lg hover:bg-white text-gray-800 transition-all opacity-0 group-hover:opacity-100 hover:scale-110 focus:outline-none"
-                  aria-label="Next image"
+                  aria-label="Следующее изображение"
                 >
                   <ChevronRight className="w-6 h-6" />
                 </button>
                 
                 <img 
                   src={GALLERY_IMAGES[activeGalleryIndex]} 
-                  alt={`Product view ${activeGalleryIndex + 1}`} 
+                  alt={`Фото продукта Freestyle Libre ${activeGalleryIndex + 1}`} 
                   className="w-full h-full object-contain p-4 md:p-8 transition-opacity duration-500"
                   key={activeGalleryIndex} // Force re-render for animation
+                  loading="lazy"
                 />
              </div>
 
@@ -394,7 +396,7 @@ export default function App() {
                        : 'border-transparent hover:border-gray-300 opacity-70 hover:opacity-100'}
                    `}
                  >
-                   <img src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover bg-white" />
+                   <img src={img} alt={`Миниатюра ${idx + 1}`} className="w-full h-full object-cover bg-white" loading="lazy" />
                  </button>
                ))}
              </div>
@@ -411,8 +413,9 @@ export default function App() {
               <div className="absolute inset-0 bg-yellow-400/20 rounded-full blur-3xl transform scale-75 opacity-50"></div>
               <img 
                 src={PLUS_IMAGE} 
-                alt="FreeStyle Libre 3 Plus" 
+                alt="Купить FreeStyle Libre 3 Plus с доставкой" 
                 className="relative z-10 w-full max-w-md object-contain hover:scale-105 transition-transform duration-500 drop-shadow-2xl"
+                loading="lazy"
               />
             </div>
             
@@ -536,8 +539,9 @@ export default function App() {
                  <div className="absolute top-0 right-0 w-32 h-32 bg-gray-100 rounded-full -translate-y-1/2 translate-x-1/2 transition-transform duration-500 group-hover:scale-150"></div>
                  <img
                    src={SELECT_IMAGE}
-                   alt="FreeStyle Libre Select"
+                   alt="Сенсор FreeStyle Libre Select"
                    className="relative z-10 w-full max-w-sm object-contain hover:scale-105 transition-transform duration-500"
+                   loading="lazy"
                  />
               </div>
             </div>
@@ -668,7 +672,7 @@ export default function App() {
                    <div className="bg-gray-900 rounded-2xl px-6 py-3 shadow-xl border-4 border-white">
                       <img 
                         src={LOGO_URL} 
-                        alt="Freestyle Libre Logo" 
+                        alt="Freestyle Libre - Официальный сайт" 
                         className="h-10 w-auto object-contain max-w-[200px]" 
                       />
                    </div>
@@ -707,7 +711,7 @@ export default function App() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             {/* Footer Logo - Clean, no wrapper */}
             <div className="flex items-center gap-3 mb-6 md:mb-0 group cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
-               <img src={LOGO_URL} alt="Freestyle Libre" className="h-10 w-auto" />
+               <img src={LOGO_URL} alt="Freestyle Libre - Футер" className="h-10 w-auto" />
             </div>
             <div className="flex flex-wrap gap-8 text-gray-400 text-sm justify-center">
               <button onClick={() => setView('privacy')} className="hover:text-libre-yellow transition-colors bg-transparent border-none p-0 cursor-pointer text-gray-400">Политика конфиденциальности</button>

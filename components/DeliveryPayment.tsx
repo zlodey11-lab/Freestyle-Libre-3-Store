@@ -162,6 +162,13 @@ export const DeliveryPayment: React.FC<DeliveryPaymentProps> = ({ onBack, logoUr
                          <p className="text-sm text-gray-500">Банковский перевод на расчетный счет.</p>
                        </div>
                     </li>
+                    <li className="flex items-start gap-3">
+                       <div className="mt-1 w-2 h-2 rounded-full bg-libre-yellow shrink-0" />
+                       <div>
+                         <span className="font-bold text-gray-900">Криптовалюта USDT</span>
+                         <p className="text-sm text-gray-500">Оплата стейблкоинами (TRC20).</p>
+                       </div>
+                    </li>
                  </ul>
                  <p className="mt-6 text-sm text-gray-500 bg-gray-50 p-4 rounded-xl inline-block">
                    Реквизиты для оплаты будут предоставлены вам менеджером после подтверждения заказа.
