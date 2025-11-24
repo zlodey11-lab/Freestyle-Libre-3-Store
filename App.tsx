@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Activity, Smartphone, Shield, Zap, CheckCircle, Plus, Minus, ShoppingCart, ChevronLeft, ChevronRight, Calendar, Link as LinkIcon, Maximize, Star, Quote } from 'lucide-react';
+import { Activity, Smartphone, Shield, Zap, CheckCircle, Plus, Minus, ShoppingCart, ChevronLeft, ChevronRight, Calendar, Link as LinkIcon, Maximize, Star, Quote, Sliders, Battery, ShieldCheck } from 'lucide-react';
 import { Button } from './components/Button';
 import { FeatureCard } from './components/FeatureCard';
 import { NutritionAnalyst } from './components/NutritionAnalyst';
@@ -9,6 +9,7 @@ import { NutritionAnalyst } from './components/NutritionAnalyst';
 const HERO_IMAGE = "https://www.freestylelibre.de/content/dam/adc/freestylelibrede/marketing/fsl3-messsystem-number1@706w.png"; // Abstract tech look
 const LOGO_URL = "https://www.freestylelibre.de/content/dam/adc/freestylelibrede/brand/Logo_FSL_V_YW.svg";
 const PLUS_IMAGE = "https://www.freestylelibre.de/content/dam/adc/freestylelibrede/products/fsl3plus/FSL3P-2v3.png";
+const SELECT_IMAGE = "https://www.medicament.com/22478-large_default/freestyle-libre-select-capteur.jpg";
 
 const GALLERY_IMAGES = [
   "https://www.freestylelibre.de/content/dam/adc/freestylelibrede/products/fsl3/FSL3-2.png", // Box
@@ -316,13 +317,84 @@ export default function App() {
                  </div>
               </div>
               
-              {/* Updated: Button stretched to full width */}
               <div className="pt-4">
                  <a href="https://t.me/diabetik_biz" target="_blank" rel="noopener noreferrer" className="block w-full">
                    <Button variant="primary" className="w-full text-xl py-4 shadow-xl hover:shadow-yellow-400/50">
                      Заказать
                    </Button>
                  </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FreeStyle Libre Select Section */}
+      <section className="py-24 bg-gray-50 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Text Side */}
+            <div className="space-y-8">
+              <div className="inline-block bg-libre-yellow text-gray-900 px-4 py-1.5 rounded-full font-bold text-sm tracking-wide uppercase shadow-sm">
+                Специальная серия
+              </div>
+              <h2 className="text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
+                FreeStyle Libre <span className="text-yellow-500">Select</span>
+              </h2>
+              <p className="text-lg text-gray-600">
+                Настраиваемый диапазон и максимальная гибкость. Libre Select — это выбор тех, кто знает свои цели и не готов к компромиссам.
+              </p>
+
+              <div className="space-y-6">
+                  <div className="flex items-start gap-4 p-4 rounded-xl bg-white hover:bg-yellow-50 transition-colors border border-gray-100 hover:border-yellow-200 group">
+                    <div className="p-3 bg-libre-yellow/20 rounded-full shadow-sm">
+                      <Sliders className="w-6 h-6 text-yellow-700" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg text-gray-900">Настраиваемый диапазон</h4>
+                      <p className="text-sm text-gray-500">Задавайте свои целевые значения глюкозы для персонализированных отчетов.</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4 p-4 rounded-xl bg-white hover:bg-yellow-50 transition-colors border border-gray-100 hover:border-yellow-200 group">
+                    <div className="p-3 bg-libre-yellow/20 rounded-full shadow-sm">
+                      <Battery className="w-6 h-6 text-yellow-700" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg text-gray-900">Оптимизированное энергопотребление</h4>
+                      <p className="text-sm text-gray-500">Стабильная связь с телефоном без лишнего расхода батареи.</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4 p-4 rounded-xl bg-white hover:bg-yellow-50 transition-colors border border-gray-100 hover:border-yellow-200 group">
+                    <div className="p-3 bg-libre-yellow/20 rounded-full shadow-sm">
+                      <ShieldCheck className="w-6 h-6 text-yellow-700" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg text-gray-900">Повышенная надежность</h4>
+                      <p className="text-sm text-gray-500">Улучшенный алгоритм обработки данных для исключения ложных тревог.</p>
+                    </div>
+                  </div>
+              </div>
+
+              <div className="pt-4">
+                  <a href="https://t.me/diabetik_biz" target="_blank" rel="noopener noreferrer" className="block w-full">
+                    <Button variant="primary" className="w-full text-xl py-4 shadow-xl hover:shadow-yellow-400/50">
+                      Заказать Select
+                    </Button>
+                  </a>
+              </div>
+            </div>
+
+            {/* Image Side */}
+            <div className="relative flex justify-center">
+              <div className="bg-white p-8 rounded-3xl shadow-2xl border border-gray-100 relative overflow-hidden group">
+                 <div className="absolute top-0 right-0 w-32 h-32 bg-gray-100 rounded-full -translate-y-1/2 translate-x-1/2 transition-transform duration-500 group-hover:scale-150"></div>
+                 <img
+                   src={SELECT_IMAGE}
+                   alt="FreeStyle Libre Select"
+                   className="relative z-10 w-full max-w-sm object-contain hover:scale-105 transition-transform duration-500"
+                 />
               </div>
             </div>
           </div>
