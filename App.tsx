@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Activity, Smartphone, Shield, Zap, CheckCircle, Plus, Minus, ShoppingCart, ChevronLeft, ChevronRight, Calendar, Link as LinkIcon, Maximize, Star, Quote, Sliders, Battery, ShieldCheck } from 'lucide-react';
+import { Activity, Smartphone, Shield, Zap, CheckCircle, Plus, Minus, ShoppingCart, ChevronLeft, ChevronRight, Calendar, Link as LinkIcon, Maximize, Star, Quote, Sliders, Battery, ShieldCheck, ChevronDown, Menu, X } from 'lucide-react';
 import { Button } from './components/Button';
 import { FeatureCard } from './components/FeatureCard';
 import { NutritionAnalyst } from './components/NutritionAnalyst';
@@ -33,6 +33,7 @@ export default function App() {
   const [view, setView] = useState<ViewState>('home');
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // View Routing
   if (view === 'privacy') {
@@ -58,6 +59,23 @@ export default function App() {
 
   const handleNextImage = () => {
     setActiveGalleryIndex((prev) => (prev === GALLERY_IMAGES.length - 1 ? 0 : prev + 1));
+  };
+
+  const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+    const element = document.getElementById(id);
+    if (element) {
+      // Offset for fixed header (80px) plus some breathing room
+      const headerOffset = 100;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
   };
 
   const features = [
@@ -119,24 +137,128 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Logo Section */}
-            <div className="flex items-center gap-3 group cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
+            <div className="flex items-center gap-3 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                <img src={LOGO_URL} alt="Freestyle Libre Logo" className="h-12 w-auto transition-transform duration-300 group-hover:scale-105" />
             </div>
 
-            <div className="hidden md:flex space-x-8">
-              <a href="#features" className="text-gray-300 hover:text-libre-yellow font-medium transition-colors">Преимущества</a>
-              <a href="#gallery" className="text-gray-300 hover:text-libre-yellow font-medium transition-colors">Галерея</a>
-              <a href="#faq" className="text-gray-300 hover:text-libre-yellow font-medium transition-colors">FAQ</a>
+            {/* Desktop Menu - Hidden on Tablet (lg) and smaller */}
+            <div className="hidden lg:flex space-x-8 items-center">
+              {/* Products Dropdown */}
+              <div className="relative group">
+                <button className="flex items-center gap-1 text-gray-300 group-hover:text-libre-yellow font-medium transition-colors py-2 focus:outline-none">
+                  Продукты <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
+                </button>
+                <div className="absolute top-full left-0 mt-0 pt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top z-50">
+                   <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 py-1">
+                     <a 
+                       href="#libre-3" 
+                       onClick={(e) => handleScrollTo(e, 'libre-3')} 
+                       className="block px-5 py-3 text-gray-800 hover:bg-yellow-50 hover:text-yellow-700 transition-colors font-medium border-b border-gray-100 last:border-0"
+                     >
+                       FreeStyle Libre 3
+                     </a>
+                     <a 
+                       href="#libre-plus" 
+                       onClick={(e) => handleScrollTo(e, 'libre-plus')} 
+                       className="block px-5 py-3 text-gray-800 hover:bg-yellow-50 hover:text-yellow-700 transition-colors font-medium border-b border-gray-100 last:border-0"
+                     >
+                       FreeStyle Libre 3 Plus
+                     </a>
+                     <a 
+                       href="#libre-select" 
+                       onClick={(e) => handleScrollTo(e, 'libre-select')} 
+                       className="block px-5 py-3 text-gray-800 hover:bg-yellow-50 hover:text-yellow-700 transition-colors font-medium"
+                     >
+                       FreeStyle Libre Select
+                     </a>
+                   </div>
+                </div>
+              </div>
+
+              <a 
+                href="#features" 
+                onClick={(e) => handleScrollTo(e, 'features')}
+                className="text-gray-300 hover:text-libre-yellow font-medium transition-colors"
+              >
+                Преимущества
+              </a>
+              <a 
+                href="#gallery" 
+                onClick={(e) => handleScrollTo(e, 'gallery')}
+                className="text-gray-300 hover:text-libre-yellow font-medium transition-colors"
+              >
+                Галерея
+              </a>
+
+              <button 
+                onClick={() => setView('delivery')}
+                className="text-gray-300 hover:text-libre-yellow font-medium transition-colors focus:outline-none"
+              >
+                Доставка и оплата
+              </button>
+
+              <button 
+                onClick={() => setView('contacts')}
+                className="text-gray-300 hover:text-libre-yellow font-medium transition-colors focus:outline-none"
+              >
+                Контакты
+              </button>
+
+              <a 
+                href="#faq" 
+                onClick={(e) => handleScrollTo(e, 'faq')}
+                className="text-gray-300 hover:text-libre-yellow font-medium transition-colors"
+              >
+                FAQ
+              </a>
             </div>
-            <a href="https://t.me/diabetik_biz" target="_blank" rel="noopener noreferrer" className="hidden md:block">
+
+            <a href="https://t.me/diabetik_biz" target="_blank" rel="noopener noreferrer" className="hidden lg:block">
               <Button variant="primary" className="shadow-lg hover:shadow-yellow-400/20">Заказать сейчас</Button>
             </a>
+
+            {/* Mobile/Tablet Menu Button - Visible on lg and smaller */}
+            <button
+              className="lg:hidden p-2 text-gray-300 hover:text-white focus:outline-none"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile/Tablet Menu Dropdown */}
+        {isMobileMenuOpen && (
+          <div className="lg:hidden bg-gray-900 border-t border-gray-800 animate-fade-in absolute top-20 left-0 w-full shadow-2xl h-screen overflow-y-auto pb-32">
+            <div className="px-4 pt-4 pb-6 space-y-2">
+               {/* Products Section */}
+               <div className="py-2">
+                 <p className="text-gray-500 uppercase text-xs font-bold tracking-wider mb-2 px-3">Продукты</p>
+                 <a href="#libre-3" onClick={(e) => handleScrollTo(e, 'libre-3')} className="block px-3 py-3 text-gray-200 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">FreeStyle Libre 3</a>
+                 <a href="#libre-plus" onClick={(e) => handleScrollTo(e, 'libre-plus')} className="block px-3 py-3 text-gray-200 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">FreeStyle Libre 3 Plus</a>
+                 <a href="#libre-select" onClick={(e) => handleScrollTo(e, 'libre-select')} className="block px-3 py-3 text-gray-200 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">FreeStyle Libre Select</a>
+               </div>
+               
+               <div className="border-t border-gray-800 my-2"></div>
+               
+               <a href="#features" onClick={(e) => handleScrollTo(e, 'features')} className="block px-3 py-3 text-base font-medium text-gray-200 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">Преимущества</a>
+               <a href="#gallery" onClick={(e) => handleScrollTo(e, 'gallery')} className="block px-3 py-3 text-base font-medium text-gray-200 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">Галерея</a>
+               <button onClick={() => { setView('delivery'); setIsMobileMenuOpen(false); }} className="block w-full text-left px-3 py-3 text-base font-medium text-gray-200 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">Доставка и оплата</button>
+               <button onClick={() => { setView('contacts'); setIsMobileMenuOpen(false); }} className="block w-full text-left px-3 py-3 text-base font-medium text-gray-200 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">Контакты</button>
+               <a href="#faq" onClick={(e) => handleScrollTo(e, 'faq')} className="block px-3 py-3 text-base font-medium text-gray-200 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">FAQ</a>
+               
+               <div className="pt-6 px-3">
+                 <a href="https://t.me/diabetik_biz" target="_blank" rel="noopener noreferrer" className="block w-full">
+                    <Button variant="primary" className="w-full justify-center text-lg">Заказать сейчас</Button>
+                 </a>
+               </div>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 lg:pt-32 lg:pb-32 overflow-hidden relative">
+      <section id="libre-3" className="pt-32 pb-20 lg:pt-32 lg:pb-32 overflow-hidden relative scroll-mt-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8 animate-fade-in lg:pr-8">
@@ -184,15 +306,17 @@ export default function App() {
                  style={{ maxHeight: '100%' }}
                />
                
-               {/* Floating Badge */}
-               <div className="absolute bottom-20 left-0 lg:left-10 bg-white p-4 rounded-2xl shadow-xl z-20 animate-bounce-slow border border-gray-100">
-                 <div className="flex items-center gap-3">
-                   <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                     <CheckCircle className="text-green-600 w-6 h-6" />
-                   </div>
-                   <div>
-                     <p className="text-xs text-gray-500">Точность</p>
-                     <p className="font-bold text-lg">MARD 7.9%</p>
+               {/* Floating Badge - Centered vertically */}
+               <div className="absolute top-1/2 left-0 lg:left-10 -translate-y-1/2 z-20">
+                 <div className="bg-white p-4 rounded-2xl shadow-xl animate-bounce-slow border border-gray-100">
+                   <div className="flex items-center gap-3">
+                     <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                       <CheckCircle className="text-green-600 w-6 h-6" />
+                     </div>
+                     <div>
+                       <p className="text-xs text-gray-500">Точность</p>
+                       <p className="font-bold text-lg">MARD 7.9%</p>
+                     </div>
                    </div>
                  </div>
                </div>
@@ -202,7 +326,7 @@ export default function App() {
       </section>
 
       {/* Benefits Section */}
-      <section id="features" className="py-24 bg-white relative overflow-hidden">
+      <section id="features" className="py-24 bg-white relative overflow-hidden scroll-mt-28">
         {/* Decorative background element */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-gray-50 rounded-full -translate-y-1/2 translate-x-1/2"></div>
 
@@ -223,7 +347,7 @@ export default function App() {
       </section>
 
       {/* Showcase / Gallery Section */}
-      <section id="gallery" className="py-20 bg-gray-50">
+      <section id="gallery" className="py-20 bg-gray-50 scroll-mt-28">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
            
            
@@ -279,7 +403,7 @@ export default function App() {
       </section>
 
       {/* Libre 3 Plus Section */}
-      <section className="py-24 bg-white relative overflow-hidden">
+      <section id="libre-plus" className="py-24 bg-white relative overflow-hidden scroll-mt-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Image Side */}
@@ -350,7 +474,7 @@ export default function App() {
       </section>
 
       {/* FreeStyle Libre Select Section */}
-      <section className="py-24 bg-gray-50 relative overflow-hidden">
+      <section id="libre-select" className="py-24 bg-gray-50 relative overflow-hidden scroll-mt-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Text Side */}
@@ -488,7 +612,7 @@ export default function App() {
       </section>
 
       {/* Merged FAQ and CTA Section */}
-      <section id="faq" className="py-24 bg-white relative">
+      <section id="faq" className="py-24 bg-white relative scroll-mt-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-start">
             
