@@ -3,7 +3,7 @@ import { NutritionAnalysis } from "../types";
 
 // Initialize the client
 // API Key is strictly from process.env.API_KEY as per instructions
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const ai = new GoogleGenAI({ apiKey: "AIzaSyCHQf6du9XQCq9HtZvdLh4vqFI04evRrtM" });
 
 const CHAT_SYSTEM_INSTRUCTION = `
 Ты - виртуальный консультант по системе мониторинга глюкозы Freestyle Libre 3.
