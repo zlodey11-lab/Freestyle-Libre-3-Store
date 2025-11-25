@@ -604,7 +604,7 @@ export default function App() {
                  </div>
                </div>
                
-               <div className="pt-4">
+               <div className="pt-4 flex justify-center">
                  <Button variant="outline" onClick={() => setView('app')} className="px-8 py-3 rounded-full border-2 border-gray-200 hover:border-libre-yellow text-gray-800 hover:bg-libre-yellow hover:text-gray-900 font-bold transition-all">
                     Подробнее о приложении
                  </Button>
@@ -685,7 +685,7 @@ export default function App() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative">
             {/* Floating Logo Badge - Outside overflow-hidden container */}
-            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-30">
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
                 <div className="bg-gray-900 p-4 rounded-2xl shadow-xl border border-gray-800">
                   <img 
                     src={LOGO_URL} 
@@ -700,7 +700,7 @@ export default function App() {
               {/* Background pattern */}
               <div className="absolute inset-0 bg-white/20 pattern-grid-lg opacity-30 pointer-events-none"></div>
 
-              <div className="relative z-10 p-8 lg:p-12 pb-32">
+              <div className="relative z-10 p-8 lg:p-12 pt-16 pb-12">
                 <h3 className="text-3xl md:text-4xl font-black text-gray-900 mb-6 leading-tight mt-6">
                   Купить сенсоры с доставкой
                 </h3>
@@ -740,8 +740,8 @@ export default function App() {
               <button onClick={() => setView('faq')} className="hover:text-libre-yellow transition-colors bg-transparent border-none p-0 cursor-pointer text-gray-400">FAQ</button>
             </div>
             <div className="mt-6 md:mt-0 text-gray-500 text-sm">
-              © 2016-2025 Diabetik.Shop Оригинальные сенсоры.
-              Информация на сайте предосталена в ознакомительных целях.
+              © 2016-2025 Diabetik.Shop Оригинальные сенсоры. <br />
+              Информация на сайте предоставлена в ознакомительных целях.
             </div>
           </div>
         </div>
