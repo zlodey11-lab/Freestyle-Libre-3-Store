@@ -1,37 +1,39 @@
 import React, { useState } from 'react';
-import { Activity, Smartphone, Shield, Zap, CheckCircle, Plus, Minus, ShoppingCart, ChevronLeft, ChevronRight, Calendar, Link as LinkIcon, Maximize, Star, Quote, Sliders, Battery, ShieldCheck, ChevronDown, Menu, X } from 'lucide-react';
+import { Activity, Smartphone, Shield, Zap, CheckCircle, Plus, Minus, ShoppingCart, ChevronLeft, ChevronRight, Calendar, Link as LinkIcon, Maximize, Star, Quote, Sliders, Battery, ShieldCheck, ChevronDown, Menu, X, Bell, Moon, Share2, Salad } from 'lucide-react';
 import { Button } from './components/Button';
 import { FeatureCard } from './components/FeatureCard';
 import { NutritionAnalyst } from './components/NutritionAnalyst';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { DeliveryPayment } from './components/DeliveryPayment';
 import { Contacts } from './components/Contacts';
+import { FaqPage } from './components/FaqPage';
+import { AppPage } from './components/AppPage';
 
 // --- Assets ---
 // Using placeholder images that represent the vibe (medical/tech/clean)
-const HERO_IMAGE = "https://www.freestylelibre.de/content/dam/adc/freestylelibrede/marketing/fsl3-messsystem-number1@706w.png"; // Abstract tech look
-const LOGO_URL = "https://www.freestylelibre.de/content/dam/adc/freestylelibrede/brand/Logo_FSL_V_YW.svg";
-const PLUS_IMAGE = "https://www.freestylelibre.de/content/dam/adc/freestylelibrede/products/fsl3plus/FSL3P-2v3.png";
-const SELECT_IMAGE = "https://www.medicament.com/22478-large_default/freestyle-libre-select-capteur.jpg";
+const HERO_IMAGE = "https://i1.imageban.ru/out/2025/11/25/d9593c0bfe3ef9632c429d921d759fa5.png"; // Abstract tech look
+const LOGO_URL = "https://i3.imageban.ru/out/2025/11/25/55283f48c17584063d152c89db82755d.png";
+const PLUS_IMAGE = "https://i4.imageban.ru/out/2025/11/25/a929c8f1add75dee278e34640d3d72fe.png";
+const SELECT_IMAGE = "https://i8.imageban.ru/out/2025/11/25/ddb985c8637a032e421c8d2c210106ae.jpg";
+const APP_IMAGE = "https://i6.imageban.ru/out/2025/11/25/ea5f168e9a3ca5e6fa624bd95cef19a9.png";
 
 const GALLERY_IMAGES = [
-  "https://www.freestylelibre.de/content/dam/adc/freestylelibrede/products/fsl3/FSL3-2.png", // Box
-  "https://www.freestylelibre.de/content/dam/adc/freestylelibrede/products/fsl3/FSL3-1.png", // Sensor
-  "https://www.freestylelibre.de/content/dam/adc/freestylelibrede/products/fsl3/FSL3-3.png", // Applicator
-  "https://www.freestylelibre.de/content/dam/adc/freestylelibrede/products/fsl3/FSL3-4.png", // Side view
-  "https://www.freestylelibre.de/content/dam/adc/freestylelibrede/products/fsl3/FSL3-5.jpg", // Lifestyle 1
-  "https://www.freestylelibre.de/content/dam/adc/freestylelibrede/products/fsl3/FSL3-6.jpg", // Lifestyle 2
-  "https://www.freestylelibre.de/content/dam/adc/freestylelibrede/products/fsl3/FSL3-7.jpg", // Lifestyle 3
-  "https://www.freestylelibre.de/content/dam/adc/freestylelibrede/products/fsl3/FSL3-8.jpg", // Lifestyle 4
-  "https://www.freestylelibre.de/content/dam/adc/freestylelibrede/products/fsl3/FSL3-9.jpg", // Lifestyle 5
-  "https://www.freestylelibre.de/content/dam/adc/freestylelibrede/products/fsl3/FSL3-10.jpg" // Lifestyle 6
+  "https://i4.imageban.ru/out/2025/11/25/6e05bb546c49503534687561605bbdb6.png", // Box
+  "https://i1.imageban.ru/out/2025/11/25/b84c9f38defbbbb3b1960bb0e55806be.png", // Sensor
+  "https://i2.imageban.ru/out/2025/11/25/935320cbf443c14d51bf3a8584f863b0.png", // Applicator
+  "https://i6.imageban.ru/out/2025/11/25/50129c747411dbed45ba4d721bc1f02e.png", // Side view
+  "https://i4.imageban.ru/out/2025/11/25/ae585b8342a4a4044f72a42dd3548db8.jpg", // Lifestyle 1
+  "https://i8.imageban.ru/out/2025/11/25/26e2c90f611c214ff41cd94cca5448bc.jpg", // Lifestyle 2
+  "https://i3.imageban.ru/out/2025/11/25/b9ca8fc67ea8fc84b541ca16120ecf30.jpg", // Lifestyle 3
+  "https://i4.imageban.ru/out/2025/11/25/d3b89e8cff0272e3268c2aacb0edebe8.jpg", // Lifestyle 4
+  "https://i4.imageban.ru/out/2025/11/25/f59caece5291bd37e27c3f8a2b85641f.jpg", // Lifestyle 5
+  "https://i3.imageban.ru/out/2025/11/25/e06d2b4fa1179605225cf940d8dbfc93.jpg" // Lifestyle 6
 ];
 
-type ViewState = 'home' | 'privacy' | 'delivery' | 'contacts';
+type ViewState = 'home' | 'privacy' | 'delivery' | 'contacts' | 'faq' | 'app';
 
 export default function App() {
   const [view, setView] = useState<ViewState>('home');
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -48,10 +50,15 @@ export default function App() {
     return <Contacts onBack={() => setView('home')} logoUrl={LOGO_URL} />;
   }
 
+  if (view === 'faq') {
+    return <FaqPage onBack={() => setView('home')} logoUrl={LOGO_URL} />;
+  }
+
+  if (view === 'app') {
+    return <AppPage onBack={() => setView('home')} logoUrl={LOGO_URL} />;
+  }
+
   // --- Home View Logic ---
-  const toggleFaq = (index: number) => {
-    setOpenFaq(openFaq === index ? null : index);
-  };
 
   const handlePrevImage = () => {
     setActiveGalleryIndex((prev) => (prev === 0 ? GALLERY_IMAGES.length - 1 : prev - 1));
@@ -80,51 +87,44 @@ export default function App() {
 
   const features = [
     {
-      title: "Невероятно маленький",
-      description: "Размером с две маленькие монетки. Настолько тонкий и незаметный, что вы забудете о нем сразу после установки.",
+      title: "Самый маленький сенсор",
+      description: "Система НМГ размером с две монеты. Тонкий и незаметный на теле датчик, о котором вы забудете сразу после установки.",
       icon: Activity
     },
     {
-      title: "Данные каждую минуту",
-      description: "Больше не нужно сканировать! Данные передаются автоматически на ваш смартфон по Bluetooth каждые 60 секунд.",
+      title: "Мониторинг 24/7",
+      description: "Больше не нужно сканировать! Уровень сахара передается автоматически на смартфон по Bluetooth каждую минуту.",
       icon: Smartphone
     },
     {
-      title: "Полная защита",
-      description: "Опциональные сигналы тревоги предупредят вас о низком или высоком уровне глюкозы в любое время суток.",
+      title: "Сигналы тревоги",
+      description: "Опциональные оповещения о гипогликемии и гипергликемии для полного контроля диабета днем и ночью.",
       icon: Shield
     },
     {
-      title: "Простая установка",
-      description: "Однокомпонентный аппликатор позволяет установить сенсор быстро и безболезненно всего за пару секунд.",
+      title: "Установка за секунды",
+      description: "Однокомпонентный аппликатор позволяет установить датчик Freestyle Libre 3 быстро, стерильно и безболезненно.",
       icon: Zap
     }
-  ];
-
-  const faqs = [
-    { q: "Сколько работает один сенсор?", a: "Каждый сенсор Freestyle Libre 3 работает непрерывно в течение 14 дней." },
-    { q: "Нужно ли калибровать сенсор?", a: "Нет, система откалибрована на заводе и не требует калибровки кровью из пальца." },
-    { q: "Водонепроницаем ли он?", a: "Да, сенсор водонепроницаем (IP27). Вы можете принимать душ, плавать и заниматься спортом." },
-    { q: "С какими телефонами совместим?", a: "Требуется смартфон с NFC и поддержкой Bluetooth LE (iPhone 8 и новее, Android 10+)." }
   ];
 
   const reviews = [
     {
       name: "Елена С.",
-      role: "Диабет 1 типа, 5 лет",
-      text: "Это просто спасение! Больше никаких исколотых пальцев. Приложение очень удобное, всегда вижу свой сахар и тренды.",
+      role: "Москва, Диабет 1 типа",
+      text: "Заказываю Libre 3 здесь уже полгода. Доставка по Москве на следующий день. Сенсоры всегда с хорошим сроком годности. Это спасение для пальцев!",
       rating: 5
     },
     {
       name: "Алексей М.",
-      role: "Спортсмен",
-      text: "Сенсор держится отлично даже в бассейне. Точность поразительная, сравнивал с глюкометром — расхождения минимальны.",
+      role: "Санкт-Петербург, Спортсмен",
+      text: "Перешел с Либре 2 на тройку. Разница огромная — не надо прикладывать телефон. Магазину спасибо за оперативную отправку в СПБ.",
       rating: 5
     },
     {
       name: "Марина В.",
-      role: "Мама ребенка с диабетом",
-      text: "Теперь я сплю спокойно. Ночные тревоги на телефон — лучшая функция. Сенсор маленький, ребенку не мешает.",
+      role: "Екатеринбург, Мама ребенка с диабетом",
+      text: "Цена на Libre 3 здесь самая адекватная. Ночные тревоги на телефон — лучшая функция для родителей. Рекомендую всем!",
       rating: 5
     }
   ];
@@ -138,7 +138,7 @@ export default function App() {
           <div className="flex justify-between items-center h-20">
             {/* Logo Section */}
             <div className="flex items-center gap-3 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-               <img src={LOGO_URL} alt="Freestyle Libre - Главная" className="h-12 w-auto transition-transform duration-300 group-hover:scale-105" />
+               <img src={LOGO_URL} alt="Freestyle Libre - Главная" className="h-14 w-auto transition-transform duration-300 group-hover:scale-105" />
             </div>
 
             {/* Desktop Menu - Hidden on Tablet (lg) and smaller */}
@@ -167,10 +167,16 @@ export default function App() {
                      <a 
                        href="#libre-select" 
                        onClick={(e) => handleScrollTo(e, 'libre-select')} 
-                       className="block px-5 py-3 text-gray-800 hover:bg-yellow-50 hover:text-yellow-700 transition-colors font-medium"
+                       className="block px-5 py-3 text-gray-800 hover:bg-yellow-50 hover:text-yellow-700 transition-colors font-medium border-b border-gray-100"
                      >
                        FreeStyle Libre Select
                      </a>
+                     <button
+                       onClick={() => setView('app')}
+                       className="block w-full text-left px-5 py-3 text-gray-800 hover:bg-yellow-50 hover:text-yellow-700 transition-colors font-medium"
+                     >
+                       FreeStyle Libre App
+                     </button>
                    </div>
                 </div>
               </div>
@@ -204,13 +210,12 @@ export default function App() {
                 Контакты
               </button>
 
-              <a 
-                href="#faq" 
-                onClick={(e) => handleScrollTo(e, 'faq')}
-                className="text-gray-300 hover:text-libre-yellow font-medium transition-colors"
+              <button 
+                onClick={() => setView('faq')}
+                className="text-gray-300 hover:text-libre-yellow font-medium transition-colors focus:outline-none"
               >
                 FAQ
-              </a>
+              </button>
             </div>
 
             <a href="https://t.me/diabetik_biz" target="_blank" rel="noopener noreferrer" className="hidden lg:block">
@@ -237,6 +242,7 @@ export default function App() {
                  <a href="#libre-3" onClick={(e) => handleScrollTo(e, 'libre-3')} className="block px-3 py-3 text-gray-200 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">FreeStyle Libre 3</a>
                  <a href="#libre-plus" onClick={(e) => handleScrollTo(e, 'libre-plus')} className="block px-3 py-3 text-gray-200 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">FreeStyle Libre 3 Plus</a>
                  <a href="#libre-select" onClick={(e) => handleScrollTo(e, 'libre-select')} className="block px-3 py-3 text-gray-200 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">FreeStyle Libre Select</a>
+                 <button onClick={() => { setView('app'); setIsMobileMenuOpen(false); }} className="block w-full text-left px-3 py-3 text-gray-200 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">FreeStyle Libre App</button>
                </div>
                
                <div className="border-t border-gray-800 my-2"></div>
@@ -245,7 +251,7 @@ export default function App() {
                <a href="#gallery" onClick={(e) => handleScrollTo(e, 'gallery')} className="block px-3 py-3 text-base font-medium text-gray-200 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">Галерея</a>
                <button onClick={() => { setView('delivery'); setIsMobileMenuOpen(false); }} className="block w-full text-left px-3 py-3 text-base font-medium text-gray-200 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">Доставка и оплата</button>
                <button onClick={() => { setView('contacts'); setIsMobileMenuOpen(false); }} className="block w-full text-left px-3 py-3 text-base font-medium text-gray-200 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">Контакты</button>
-               <a href="#faq" onClick={(e) => handleScrollTo(e, 'faq')} className="block px-3 py-3 text-base font-medium text-gray-200 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">FAQ</a>
+               <button onClick={() => { setView('faq'); setIsMobileMenuOpen(false); }} className="block w-full text-left px-3 py-3 text-base font-medium text-gray-200 hover:text-white hover:bg-gray-800 rounded-xl transition-colors">FAQ</button>
                
                <div className="pt-6 px-3">
                  <a href="https://t.me/diabetik_biz" target="_blank" rel="noopener noreferrer" className="block w-full">
@@ -265,15 +271,14 @@ export default function App() {
               <div className="inline-block bg-libre-yellow/20 text-yellow-800 px-4 py-1.5 rounded-full font-bold text-sm tracking-wide uppercase border border-libre-yellow/30">
                 Новое поколение CGM
               </div>
-              <h1 className="text-5xl lg:text-7xl font-black leading-tight text-gray-900">
-                Freestyle Libre 3<br/>
+              <h1 className="text-4xl lg:text-6xl font-black leading-tight text-gray-900">
+                Купить Freestyle Libre 3<br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-libre-yellow to-yellow-600">
-                  Свобода под контролем.
+                  Мониторинг без проколов
                 </span>
               </h1>
-              <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
-                Купить самый маленький, тонкий и точный сенсор глюкозы в мире с доставкой по России. 
-                Freestyle Libre 3 автоматически передает данные на ваш телефон каждую минуту.
+              <p className="text-lg text-gray-600 leading-relaxed max-w-lg">
+                Оригинальные сенсоры Abbott Freestyle Libre 3. Самый маленький и точный датчик глюкозы с автоматической передачей данных на телефон. Быстрая доставка по Москве, СПБ и всей России.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a href="https://t.me/diabetik_biz" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
@@ -290,7 +295,7 @@ export default function App() {
                      </div>
                    ))}
                 </div>
-                <p>Выбор 1000+ диабетиков в этом месяце</p>
+                <p>Выбор 1000+ диабетиков России в этом месяце</p>
               </div>
             </div>
             
@@ -301,26 +306,13 @@ export default function App() {
                {/* Using object-contain to respect the 706x908 portrait ratio without cropping */}
                <img 
                  src={HERO_IMAGE} 
-                 alt="Сенсор Freestyle Libre 3 в работе" 
+                 alt="Сенсор Freestyle Libre 3 упаковка и датчик" 
                  className="relative z-10 rounded-3xl drop-shadow-2xl transform -rotate-2 group-hover:rotate-0 transition-transform duration-700 w-full max-w-[360px] lg:max-w-[480px] h-auto object-contain"
                  style={{ maxHeight: '100%' }}
                  fetchPriority="high"
                />
                
-               {/* Floating Badge - Centered vertically */}
-               <div className="absolute top-1/2 left-0 lg:left-10 -translate-y-1/2 z-20">
-                 <div className="bg-white p-4 rounded-2xl shadow-xl animate-bounce-slow border border-gray-100">
-                   <div className="flex items-center gap-3">
-                     <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                       <CheckCircle className="text-green-600 w-6 h-6" />
-                     </div>
-                     <div>
-                       <p className="text-xs text-gray-500">Точность</p>
-                       <p className="font-bold text-lg">MARD 7.9%</p>
-                     </div>
-                   </div>
-                 </div>
-               </div>
+               {/* Floating Badge removed */}
             </div>
           </div>
         </div>
@@ -333,9 +325,9 @@ export default function App() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-4xl font-bold mb-4">Почему выбирают Libre 3?</h2>
+            <h2 className="text-4xl font-bold mb-4">Почему стоит купить Libre 3?</h2>
             <p className="text-xl text-gray-600">
-              Технологии будущего, доступные уже сегодня. Забудьте о прокалывании пальцев.
+              Передовые технологии для контроля сахарного диабета. Забудьте о глюкометрах и полосках.
             </p>
           </div>
           
@@ -350,7 +342,7 @@ export default function App() {
       {/* Showcase / Gallery Section */}
       <section id="gallery" className="py-20 bg-gray-50 scroll-mt-28">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-           
+           <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">Фотогалерея продукции</h2>
            
            <div className="bg-white p-4 md:p-8 rounded-3xl shadow-xl">
              {/* Main Image Display */}
@@ -376,7 +368,7 @@ export default function App() {
                 
                 <img 
                   src={GALLERY_IMAGES[activeGalleryIndex]} 
-                  alt={`Фото продукта Freestyle Libre ${activeGalleryIndex + 1}`} 
+                  alt={`Фото продукта Freestyle Libre ${activeGalleryIndex + 1} - вид упаковки и сенсора`} 
                   className="w-full h-full object-contain p-4 md:p-8 transition-opacity duration-500"
                   key={activeGalleryIndex} // Force re-render for animation
                   loading="lazy"
@@ -396,7 +388,7 @@ export default function App() {
                        : 'border-transparent hover:border-gray-300 opacity-70 hover:opacity-100'}
                    `}
                  >
-                   <img src={img} alt={`Миниатюра ${idx + 1}`} className="w-full h-full object-cover bg-white" loading="lazy" />
+                   <img src={img} alt={`Миниатюра сенсора ${idx + 1}`} className="w-full h-full object-cover bg-white" loading="lazy" />
                  </button>
                ))}
              </div>
@@ -413,7 +405,7 @@ export default function App() {
               <div className="absolute inset-0 bg-yellow-400/20 rounded-full blur-3xl transform scale-75 opacity-50"></div>
               <img 
                 src={PLUS_IMAGE} 
-                alt="Купить FreeStyle Libre 3 Plus с доставкой" 
+                alt="Купить FreeStyle Libre 3 Plus с доставкой по РФ" 
                 className="relative z-10 w-full max-w-md object-contain hover:scale-105 transition-transform duration-500 drop-shadow-2xl"
                 loading="lazy"
               />
@@ -422,14 +414,14 @@ export default function App() {
             {/* Text Side */}
             <div className="order-1 md:order-2 space-y-8">
               <div className="inline-block bg-libre-yellow text-gray-900 px-4 py-1.5 rounded-full font-bold text-sm tracking-wide uppercase shadow-sm">
-                Новинка
+                Новинка 2025
               </div>
               <h2 className="text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
                 FreeStyle Libre 3 <span className="text-yellow-500">Plus</span>
               </h2>
               <p className="text-lg text-gray-600">
-                Еще больше уверенности с улучшенной версией самого популярного сенсора. 
-                Libre 3 Plus создан для тех, кто хочет максимума от системы мониторинга.
+                Закажите улучшенную версию самого популярного сенсора. 
+                Libre 3 Plus — это расширенный срок службы и интеграция с инсулиновыми помпами.
               </p>
               
               <div className="space-y-6">
@@ -439,7 +431,7 @@ export default function App() {
                     </div>
                     <div>
                       <h4 className="font-bold text-lg text-gray-900 group-hover:text-gray-900">15 дней работы</h4>
-                      <p className="text-sm text-gray-500">Теперь сенсор работает на день дольше стандартной версии.</p>
+                      <p className="text-sm text-gray-500">Срок службы сенсора увеличен до 15 дней для вашего удобства.</p>
                     </div>
                  </div>
 
@@ -448,8 +440,8 @@ export default function App() {
                       <LinkIcon className="w-6 h-6 text-yellow-600" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-lg text-gray-900 group-hover:text-gray-900">Совместимость с помпами</h4>
-                      <p className="text-sm text-gray-500">Интеграция с автоматизированными системами доставки инсулина (AID).</p>
+                      <h4 className="font-bold text-lg text-gray-900 group-hover:text-gray-900">Совместимость с AID</h4>
+                      <p className="text-sm text-gray-500">Работает с автоматизированными системами доставки инсулина (помпами).</p>
                     </div>
                  </div>
 
@@ -458,8 +450,8 @@ export default function App() {
                       <Maximize className="w-6 h-6 text-yellow-600" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-lg text-gray-900 group-hover:text-gray-900">Тот же размер</h4>
-                      <p className="text-sm text-gray-500">Несмотря на новые функции, он остается самым маленьким в мире.</p>
+                      <h4 className="font-bold text-lg text-gray-900 group-hover:text-gray-900">Минимальный размер</h4>
+                      <p className="text-sm text-gray-500">Несмотря на новые функции, он остается самым компактным CGM.</p>
                     </div>
                  </div>
               </div>
@@ -467,7 +459,7 @@ export default function App() {
               <div className="pt-4">
                  <a href="https://t.me/diabetik_biz" target="_blank" rel="noopener noreferrer" className="block w-full">
                    <Button variant="primary" className="w-full text-xl py-4 shadow-xl hover:shadow-yellow-400/50">
-                     Заказать
+                     Заказать Libre 3 Plus
                    </Button>
                  </a>
               </div>
@@ -489,7 +481,7 @@ export default function App() {
                 FreeStyle Libre <span className="text-yellow-500">Select</span>
               </h2>
               <p className="text-lg text-gray-600">
-                Настраиваемый диапазон и максимальная гибкость. Libre Select — это выбор тех, кто знает свои цели и не готов к компромиссам.
+                Настраиваемый диапазон и максимальная гибкость. Купить Libre Select — выбор тех, кто хочет персонализированный контроль диабета.
               </p>
 
               <div className="space-y-6">
@@ -499,7 +491,7 @@ export default function App() {
                     </div>
                     <div>
                       <h4 className="font-bold text-lg text-gray-900">Настраиваемый диапазон</h4>
-                      <p className="text-sm text-gray-500">Задавайте свои целевые значения глюкозы для персонализированных отчетов.</p>
+                      <p className="text-sm text-gray-500">Задавайте свои целевые значения глюкозы для точных отчетов.</p>
                     </div>
                   </div>
 
@@ -539,11 +531,84 @@ export default function App() {
                  <div className="absolute top-0 right-0 w-32 h-32 bg-gray-100 rounded-full -translate-y-1/2 translate-x-1/2 transition-transform duration-500 group-hover:scale-150"></div>
                  <img
                    src={SELECT_IMAGE}
-                   alt="Сенсор FreeStyle Libre Select"
+                   alt="Сенсор FreeStyle Libre Select упаковка"
                    className="relative z-10 w-full max-w-sm object-contain hover:scale-105 transition-transform duration-500"
                    loading="lazy"
                  />
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* App Section */}
+      <section className="py-24 bg-white text-gray-900 relative overflow-hidden">
+        {/* Decorative background */}
+        <div className="absolute top-0 left-0 w-full h-full bg-white"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-400/20 rounded-full blur-3xl transform translate-y-1/2 translate-x-1/2"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Image Side */}
+            <div className="relative flex justify-center order-2 md:order-1">
+               <div className="absolute inset-0 bg-yellow-400/20 rounded-full blur-3xl transform scale-75 opacity-50"></div>
+               <img 
+                 src={APP_IMAGE} 
+                 alt="Мобильное приложение FreeStyle Libre 3 интерфейс" 
+                 className="relative z-10 w-full max-w-sm h-auto object-contain transform hover:scale-105 transition-transform duration-700 drop-shadow-2xl" 
+                 loading="lazy"
+               />
+            </div>
+
+            {/* Text Side */}
+            <div className="order-1 md:order-2 space-y-8">
+               <div className="inline-block bg-gray-100 text-gray-800 border border-gray-200 px-4 py-1.5 rounded-full font-bold text-sm tracking-wide uppercase">
+                 Экосистема
+               </div>
+               <h2 className="text-4xl lg:text-5xl font-black leading-tight text-gray-900">
+                 Приложение <br/> <span className="text-yellow-500">FreeStyle Libre 3</span>
+               </h2>
+               <p className="text-xl text-gray-600">
+                 Вся информация о вашем диабете на одном экране. Без ресиверов, проводов и лишних устройств. Скачайте приложение и подключите сенсор.
+               </p>
+
+               <div className="grid gap-6 mt-4">
+                 <div className="flex gap-4 p-4 rounded-xl bg-gray-50 border border-gray-100 hover:shadow-md transition-shadow">
+                   <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center border border-gray-200 shrink-0 shadow-sm">
+                     <Bell className="w-6 h-6 text-yellow-600" />
+                   </div>
+                   <div>
+                     <h4 className="font-bold text-lg mb-1 text-gray-900">Сигналы тревоги</h4>
+                     <p className="text-gray-500 text-sm">Мгновенные уведомления о гипогликемии и гипергликемии.</p>
+                   </div>
+                 </div>
+
+                 <div className="flex gap-4 p-4 rounded-xl bg-gray-50 border border-gray-100 hover:shadow-md transition-shadow">
+                   <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center border border-gray-200 shrink-0 shadow-sm">
+                     <Share2 className="w-6 h-6 text-yellow-600" />
+                   </div>
+                   <div>
+                     <h4 className="font-bold text-lg mb-1 text-gray-900">LibreLinkUp</h4>
+                     <p className="text-gray-500 text-sm">Делитесь данными с врачом или близкими в реальном времени.</p>
+                   </div>
+                 </div>
+
+                 <div className="flex gap-4 p-4 rounded-xl bg-gray-50 border border-gray-100 hover:shadow-md transition-shadow">
+                   <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center border border-gray-200 shrink-0 shadow-sm">
+                     <Moon className="w-6 h-6 text-yellow-600" />
+                   </div>
+                   <div>
+                     <h4 className="font-bold text-lg mb-1 text-gray-900">Темная тема</h4>
+                     <p className="text-gray-500 text-sm">Комфортное использование приложения ночью.</p>
+                   </div>
+                 </div>
+               </div>
+               
+               <div className="pt-4">
+                 <Button variant="outline" onClick={() => setView('app')} className="px-8 py-3 rounded-full border-2 border-gray-200 hover:border-libre-yellow text-gray-800 hover:bg-libre-yellow hover:text-gray-900 font-bold transition-all">
+                    Подробнее о приложении
+                 </Button>
+               </div>
             </div>
           </div>
         </div>
@@ -589,7 +654,7 @@ export default function App() {
       {/* Reviews Section */}
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-           <h2 className="text-4xl font-bold text-center mb-16 text-gray-900">Что говорят пользователи</h2>
+           <h2 className="text-4xl font-bold text-center mb-16 text-gray-900">Отзывы покупателей</h2>
            <div className="grid md:grid-cols-3 gap-8">
              {reviews.map((review, idx) => (
                 <div key={idx} className="bg-white p-8 rounded-3xl shadow-lg relative transform hover:-translate-y-2 transition-transform duration-300">
@@ -615,92 +680,47 @@ export default function App() {
         </div>
       </section>
 
-      {/* Merged FAQ and CTA Section */}
-      <section id="faq" className="py-24 bg-white relative scroll-mt-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
-            
-            {/* Left Column: FAQ */}
-            <div className="order-2 lg:order-1">
-              <h2 className="text-4xl font-bold mb-8 text-gray-900">Часто задаваемые вопросы</h2>
-              <p className="text-gray-600 mb-10">
-                Мы собрали ответы на самые популярные вопросы пользователей, чтобы вы могли быстрее начать пользоваться системой.
-              </p>
-              <div className="space-y-4">
-                {faqs.map((item, idx) => (
-                  <div key={idx} className="border border-gray-200 rounded-2xl overflow-hidden transition-all duration-300 hover:border-libre-yellow hover:shadow-md bg-white">
-                    <button 
-                      onClick={() => toggleFaq(idx)}
-                      className="w-full px-6 py-5 flex items-center justify-between bg-white hover:bg-gray-50 transition-colors group"
-                    >
-                      <span className="font-bold text-lg text-left text-gray-800">{item.q}</span>
-                      <div className={`rounded-full p-2 transition-all duration-500 ${openFaq === idx ? 'bg-libre-yellow rotate-180' : 'bg-gray-100 group-hover:bg-gray-200'}`}>
-                         {openFaq === idx ? 
-                           <Minus className="text-gray-900 w-4 h-4" /> : 
-                           <Plus className="text-gray-500 w-4 h-4" />
-                         }
-                      </div>
-                    </button>
-                    {/* CSS Grid Animation for Smooth Height Transition */}
-                    <div className={`grid transition-[grid-template-rows] duration-500 ease-in-out ${openFaq === idx ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
-                      <div className="overflow-hidden">
-                        <div className="px-6 pb-6 pt-2 text-gray-600 border-t border-gray-100 leading-relaxed">
-                          {item.a}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-8 text-sm text-gray-500">
-                <p>Не нашли ответ на свой вопрос? <button onClick={() => setView('contacts')} className="text-libre-yellow hover:underline font-bold bg-transparent border-none p-0 cursor-pointer">Напишите нам</button></p>
-              </div>
+      {/* Final CTA Section (Replaces merged FAQ) */}
+      <section className="py-24 bg-white relative z-10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative">
+            {/* Floating Logo Badge - Outside overflow-hidden container */}
+            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-30">
+                <div className="bg-gray-900 p-4 rounded-2xl shadow-xl border border-gray-800">
+                  <img 
+                    src={LOGO_URL} 
+                    alt="Freestyle Libre - Официальный сайт" 
+                    className="h-16 w-auto object-contain" 
+                  />
+                </div>
             </div>
 
-            {/* Right Column: CTA Card with Image */}
-            <div className="order-1 lg:order-2 lg:sticky lg:top-32 mt-16 lg:mt-0">
-              {/* Added relative but REMOVED overflow-hidden to allow logo to pop out top */}
-              <div className="bg-libre-yellow rounded-3xl shadow-2xl relative text-center group">
-                
-                {/* Background pattern container - Needs rounded corners to clip pattern */}
-                <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
-                   <div className="absolute inset-0 bg-white/20 pattern-grid-lg opacity-30"></div>
-                </div>
-                
-                {/* Floating Logo Badge - Positioned absolutely at the top center */}
-                <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 z-20 w-full flex justify-center">
-                   <div className="bg-gray-900 rounded-2xl px-6 py-3 shadow-xl border-4 border-white">
-                      <img 
-                        src={LOGO_URL} 
-                        alt="Freestyle Libre - Официальный сайт" 
-                        className="h-10 w-auto object-contain max-w-[200px]" 
-                      />
-                   </div>
-                </div>
+            <div className="bg-libre-yellow rounded-3xl shadow-2xl relative text-center group overflow-hidden">
+              
+              {/* Background pattern */}
+              <div className="absolute inset-0 bg-white/20 pattern-grid-lg opacity-30 pointer-events-none"></div>
 
-                <div className="relative z-10 p-8 lg:p-10 pt-12">
-                  <h3 className="text-3xl font-black text-gray-900 mb-4 leading-tight mt-4">
-                    Начните жизнь без проколов
-                  </h3>
-                  <p className="text-gray-900/80 mb-8 font-medium">
-                    Закажите сенсоры сегодня и получите контроль над сахаром с доставкой на дом.
-                  </p>
-                  
-                  <div className="space-y-4">
-                    <a href="https://t.me/diabetik_biz" target="_blank" rel="noopener noreferrer" className="block w-full">
-                      <Button variant="dark" className="w-full text-lg py-4 shadow-xl hover:scale-[1.02] animate-pulse-scale hover:animate-none">
-                        Заказать сенсоры
-                      </Button>
-                    </a>
-                  </div>
-                  
-                  <p className="mt-6 text-xs text-gray-900/60 font-medium">
-                    *Не является медицинским советом.
-                  </p>
+              <div className="relative z-10 p-8 lg:p-12 pb-32">
+                <h3 className="text-3xl md:text-4xl font-black text-gray-900 mb-6 leading-tight mt-6">
+                  Купить сенсоры с доставкой
+                </h3>
+                <p className="text-gray-900/80 mb-10 text-lg font-medium max-w-xl mx-auto">
+                  Оформите заказ сегодня и получите полный контроль над диабетом. Быстрая отправка в любой регион России и СНГ.
+                </p>
+                
+                <div className="max-w-md mx-auto">
+                  <a href="https://t.me/diabetik_biz" target="_blank" rel="noopener noreferrer" className="block w-full">
+                    <Button variant="dark" className="w-full text-xl py-4 shadow-xl hover:scale-[1.02] animate-pulse-scale hover:animate-none">
+                      Заказать сенсоры
+                    </Button>
+                  </a>
                 </div>
+                
+                <p className="mt-8 text-xs text-gray-900/60 font-medium">
+                  *Не является медицинским советом. Перед применением проконсультируйтесь с врачом.
+                </p>
               </div>
             </div>
-
           </div>
         </div>
       </section>
@@ -711,15 +731,17 @@ export default function App() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             {/* Footer Logo - Clean, no wrapper */}
             <div className="flex items-center gap-3 mb-6 md:mb-0 group cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
-               <img src={LOGO_URL} alt="Freestyle Libre - Футер" className="h-10 w-auto" />
+               <img src={LOGO_URL} alt="Freestyle Libre - Футер" className="h-14 w-auto" />
             </div>
             <div className="flex flex-wrap gap-8 text-gray-400 text-sm justify-center">
               <button onClick={() => setView('privacy')} className="hover:text-libre-yellow transition-colors bg-transparent border-none p-0 cursor-pointer text-gray-400">Политика конфиденциальности</button>
               <button onClick={() => setView('delivery')} className="hover:text-libre-yellow transition-colors bg-transparent border-none p-0 cursor-pointer text-gray-400">Доставка и оплата</button>
               <button onClick={() => setView('contacts')} className="hover:text-libre-yellow transition-colors bg-transparent border-none p-0 cursor-pointer text-gray-400">Контакты</button>
+              <button onClick={() => setView('faq')} className="hover:text-libre-yellow transition-colors bg-transparent border-none p-0 cursor-pointer text-gray-400">FAQ</button>
             </div>
             <div className="mt-6 md:mt-0 text-gray-500 text-sm">
-              © 2024 Freestyle Libre Store. All rights reserved.
+              © 2016-2025 Diabetik.Shop Оригинальные сенсоры.
+              Информация на сайте предосталена в ознакомительных целях.
             </div>
           </div>
         </div>

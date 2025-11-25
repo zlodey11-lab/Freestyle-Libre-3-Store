@@ -16,10 +16,10 @@ export const Contacts: React.FC<ContactsProps> = ({ onBack, logoUrl }) => {
   return (
     <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
+      <nav className="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-gray-800 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer" onClick={onBack}>
-            <img src={logoUrl} alt="Freestyle Libre" className="h-10 w-auto" />
+            <img src={logoUrl} alt="Freestyle Libre" className="h-14 w-auto" />
           </div>
           <Button variant="outline" onClick={onBack} className="flex items-center gap-2 px-6">
             <ArrowLeft className="w-4 h-4" />
@@ -103,7 +103,7 @@ export const Contacts: React.FC<ContactsProps> = ({ onBack, logoUrl }) => {
 
       {/* Simple Footer */}
       <footer className="bg-white border-t border-gray-200 py-8 text-center text-gray-500 text-sm">
-        <p>© 2024 Freestyle Libre Store. Все права защищены.</p>
+        <p>© 2016-2025 Diabetik.Shop. Все права защищены.</p>
       </footer>
     </div>
   );
