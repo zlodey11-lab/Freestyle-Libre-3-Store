@@ -1,9 +1,6 @@
-import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 import { NutritionAnalysis } from "../types";
 
-// Initialize the client
-// API Key is strictly from process.env.API_KEY as per instructions
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// --- Системные инструкции (оставляем их здесь, чтобы отправлять на сервер) ---
 
 const CHAT_SYSTEM_INSTRUCTION = `
 Ты - виртуальный консультант по системе мониторинга глюкозы Freestyle Libre 3.
@@ -35,43 +32,69 @@ const NUTRITION_SYSTEM_INSTRUCTION = `
 }
 `;
 
-export const sendMessageToGemini = async (message: string): Promise<string> => {
+// --- Функция для отправки запроса на ваш PHP прокси ---
+async function callProxy(message: string, systemInstruction: string, isJsonMode: boolean = false) {
   try {
-    const response: GenerateContentResponse = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: message,
-      config: {
-        systemInstruction: CHAT_SYSTEM_INSTRUCTION,
+    // Обращаемся к файлу gemini-proxy.php на вашем хостинге
+    const response = await fetch('/gemini-proxy.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ 
+        prompt: message,
+        system_instruction: systemInstruction,
+        is_json: isJsonMode 
+      }),
     });
 
-    return response.text || "Извините, я сейчас не могу ответить. Попробуйте позже.";
+    if (!response.ok) {
+      throw new Error(`Server Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.error) {
+      throw new Error(data.error);
+    }
+
+    // Google API возвращает ответ глубоко внутри JSON
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    
+    if (!text) {
+        throw new Error("Empty response from AI");
+    }
+
+    return text;
+
   } catch (error) {
-    console.error("Gemini API Error:", error);
+    console.error("Proxy API Error:", error);
     throw error;
+  }
+}
+
+// --- Экспортируемые функции (интерфейс остался тем же) ---
+
+export const sendMessageToGemini = async (message: string): Promise<string> => {
+  try {
+    // Вызываем прокси с инструкцией для ЧАТА
+    const responseText = await callProxy(message, CHAT_SYSTEM_INSTRUCTION, false);
+    return responseText;
+  } catch (error) {
+    return "Извините, я сейчас не могу ответить. Попробуйте позже.";
   }
 };
 
 export const analyzeMeal = async (mealDescription: string): Promise<NutritionAnalysis> => {
   try {
-    const response: GenerateContentResponse = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: mealDescription,
-      config: {
-        systemInstruction: NUTRITION_SYSTEM_INSTRUCTION,
-        responseMimeType: "application/json",
-      },
-    });
-
-    if (!response.text) {
-      throw new Error("Empty response from AI");
-    }
-
-    // Parse the JSON response
-    const data = JSON.parse(response.text) as NutritionAnalysis;
+    // Вызываем прокси с инструкцией для ДИЕТОЛОГА и флагом JSON
+    const responseText = await callProxy(mealDescription, NUTRITION_SYSTEM_INSTRUCTION, true);
+    
+    // Превращаем текст в объект
+    const data = JSON.parse(responseText) as NutritionAnalysis;
     return data;
   } catch (error) {
-    console.error("Gemini Nutrition API Error:", error);
+    console.error("Meal Analysis Error:", error);
     throw error;
   }
 };
